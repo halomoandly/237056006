@@ -1,0 +1,102 @@
+### EXAMPLE 1
+
+### Memisahkan Kelompok Berdasarkan Kategori Target
+
+""""
+TUGAS 2 :   Artificial Neural Network
+NAMA    :   Halomoan Daulay
+NIM     :   237056006
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Inisialisasi data masukan
+data_points = np.array([
+    [1, 1],
+    [1, 0],
+    [0, 1],
+    [0, 0]
+])
+labels = np.array([1, -1, -1, -1])
+
+# Memisahkan data menjadi dua kategori: target 1 dan target -1
+positive_class = data_points[labels == 1]
+negative_class = data_points[labels == -1]
+
+# Plot untuk visualisasi kelompok data
+plt.scatter(positive_class[:, 0], positive_class[:, 1], color='cyan', marker='o', label='Kategori 1')
+plt.scatter(negative_class[:, 0], negative_class[:, 1], color='orange', marker='s', label='Kategori -1')
+plt.xlabel('Fitur X1')
+plt.ylabel('Fitur X2')
+plt.legend()
+plt.title('Distribusi Data Berdasarkan Target')
+plt.show()
+
+
+### Menentukan Nilai w_a, w_b, dan bias_term Untuk Mendapatkan Decision Boundary yang Optimal
+
+# Inisialisasi bobot dan bias untuk model
+weights = np.zeros(3)  # Format [w_a, w_b, bias_term]
+learning_rate = 0.1
+
+# Menambahkan kolom bias ke data masukan
+input_with_bias = np.hstack((data_points, np.ones((data_points.shape[0], 1))))
+
+# Fungsi aktivasi untuk menghasilkan output biner
+def activation_function(input_value):
+    return 1 if input_value >= 0 else -1
+
+# Algoritma Perceptron untuk mempelajari bobot
+for iteration in range(10):
+    for j in range(len(input_with_bias)):
+        prediction = activation_function(np.dot(input_with_bias[j], weights))
+        error = labels[j] - prediction
+        weights += learning_rate * error * input_with_bias[j]
+
+print("Optimal values for w_a, w_b, and bias_term:", weights)
+
+
+### Menentukan Decision Boundary g(x1, x2)
+
+def decision_boundary(x1, x2):
+    return -1 * (weights[0] * x1 + weights[2]) / weights[1]  # Adjust decision boundary
+
+# Define x range for decision boundary and calculate y values
+x_vals = np.linspace(-1, 2, 100)
+y_vals = decision_boundary(x_vals, 0)
+
+# Plot data points and decision boundary with new colors and labels
+plt.scatter(positive_class[:, 0], positive_class[:, 1], color='magenta', marker='o', label='Category +1')
+plt.scatter(negative_class[:, 0], negative_class[:, 1], color='brown', marker='s', label='Category -1')
+plt.plot(x_vals, y_vals, color='green', linestyle='--', label='Decision Boundary')
+plt.xlabel('Feature X1')
+plt.ylabel('Feature X2')
+plt.legend()
+plt.title('Decision Boundary Visualization')
+plt.show()
+
+### Menentukan Threshold 0.8 untuk Output yang Dihasilkan
+
+def predict_output(x1, x2):
+    threshold_value = 0.8
+    return 1 if decision_boundary(x1, x2) >= threshold_value else -1
+
+# Test the prediction function with modified threshold
+predicted_results = [predict_output(p[0], p[1]) for p in data_points]
+print("Predictions with threshold 0.8:", predicted_results)
+
+# Prepare results data with modified approach
+result_data = {
+    'Input': ['(1, 1)', '(1, 0)', '(0, 1)', '(0, 0)'],
+    'Weighted Sum': [decision_boundary(p[0], p[1]) for p in data_points],
+    'Predicted Result': predicted_results,
+    'Actual Target': labels,
+    'Adjustment': ["None" if predicted_results[i] == labels[i] else "Adjust" for i in range(len(labels))]
+}
+
+# Display as DataFrame
+import pandas as pd
+result_df = pd.DataFrame(result_data)
+print(result_df)
+
+
