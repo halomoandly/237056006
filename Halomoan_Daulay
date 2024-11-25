@@ -1,0 +1,112 @@
+### Create dan load data
+
+""""
+TUGAS 2 :   Artificial Neural Network
+NAMA    :   Halomoan Daulay
+NIM     :   237056006
+"""
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Step 1: Loading Data
+data = {
+    'Input1': [1, 0, 1, 1],
+    'Input2': [0, 0, 0, 1],
+    'Input3': [0, 1, 1, 1],
+    'Output': [0, 0, 0, 1]
+}
+df = pd.DataFrame(data)
+df
+
+### Inisialisasi Parameter
+
+learning_rate = 0.1
+epochs = 10
+weights = np.zeros(3)  # tiga input
+bias = 0
+
+### Fungsi Aktivasi
+
+def step_function(x):
+    return 1 if x >= 0 else 0
+
+### Pelatihan Model dengan Format Epoch Standar
+
+# Define the predict function if missing
+def predict(inputs):
+    # Dummy predict logic - to be replaced with the actual model logic
+    return np.dot(inputs, weights) + bias
+
+outputs = [predict(np.array([row['Input1'], row['Input2'], row['Input3']])) for _, row in df.iterrows()]
+
+# Update predictions in DataFrame
+df['Predicted_Output'] = outputs
+print(df)
+
+# Visualize results
+plt.figure(figsize=(12, 6))
+plt.plot(df.index, df['Output'], 'o', color='green', label='Original Output')
+plt.plot(df.index, df['Predicted_Output'], 'x', color='purple', label='Perceptron Prediction')
+plt.xlabel('Data Index')
+plt.ylabel('Output Value')
+plt.title('Prediction Results')
+plt.legend()
+plt.show()
+
+### Prediksi
+
+# Define the predict function if missing
+def predict(inputs):
+    # Dummy predict logic - to be replaced with the actual model logic
+    return np.dot(inputs, weights) + bias
+
+outputs = [predict(np.array([row['Input1'], row['Input2'], row['Input3']])) for _, row in df.iterrows()]
+
+# Update predictions in DataFrame
+df['Predicted_Output'] = outputs
+print(df)
+
+# Visualize results
+plt.figure(figsize=(12, 6))
+plt.plot(df.index, df['Output'], 'o', color='green', label='Original Output')
+plt.plot(df.index, df['Predicted_Output'], 'x', color='purple', label='Perceptron Prediction')
+plt.xlabel('Data Index')
+plt.ylabel('Output Value')
+plt.title('Prediction Results')
+plt.legend()
+plt.show()
+
+# Define the predict function if missing
+def predict(inputs):
+    # Dummy predict logic - to be replaced with the actual model logic
+    return np.dot(inputs, weights) + bias
+
+outputs = [predict(np.array([row['Input1'], row['Input2'], row['Input3']])) for _, row in df.iterrows()]
+
+# Update predictions in DataFrame
+df['Predicted_Output'] = outputs
+print(df)
+
+# Visualize results
+plt.figure(figsize=(12, 6))
+plt.plot(df.index, df['Output'], 'o', color='green', label='Original Output')
+plt.plot(df.index, df['Predicted_Output'], 'x', color='purple', label='Perceptron Prediction')
+plt.xlabel('Data Index')
+plt.ylabel('Output Value')
+plt.title('Prediction Results')
+plt.legend()
+plt.show()
+
+
+
+,
+    'Input2': [0, 0, 0, 1],
+    'Input3': [0, 1, 1, 1],
+    'Output': [0, 0, 0, 1]
+}
+df = pd.DataFrame(data)
+df
+
+
